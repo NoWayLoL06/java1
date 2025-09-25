@@ -1,13 +1,22 @@
 public class Foo {
     public static void main(String[] args){
-        byte b = 127;
-        int i = 100;
+        int a = 3, b = 3, c = 3;
+        
+        // b = 3, a = 4
+        b = a++;
+        System.out.println(b + " / " + a);
+        // a = 4, b = 4
+        a = ++b;
+        System.out.println(a + " / " + b);
+        // a = 3, c = 2
+        a = c--;
+        System.out.println(a + " / " + c);
+        // b = 1, c = 1
+        b = --c;
+        System.out.println(b + " / " + c);
+    }
 
-        System.out.println(b + i);
-        System.out.println(10/4);
-        System.out.println(10.0/4);
-        System.out.println((char)0x12340061);
-        System.out.println((int)2.0 + (int)1.8); // 2 + 1
-        System.out.println((int)2.9 + 1.8);
+
+        
 
 }
