@@ -1,6 +1,67 @@
 # 권용준(202530102)
 
 # ( 9월 25일 강의 )
+### 반복문
+- 자바 반복문 - `for`, `while`, `do-while` 문
+  - `for` : 반복의 휫수가 정해져 있을 때
+  - `while` : 반복의 휫수가 무한일 떄
+  - `do-while` : 
+
+### 중첩 반복
+- 반복문이 다른 반복문을 내포하는 구조
+- 10000명의 학생이 있는 100개 대학의 모든 학생 설적의 합을 구할 떄, `for` 문을 이용하면 좋음
+
+### Switch 문
+- `Switch`문의 식과 `case` 문의 값과 비교
+  - case의 비교 값과 일치하면 해당 case의 실행문장 수행
+  - break 만나는 switch문을 벗어남
+  - case의 비교 값과 일치하는 것이 없으면 default 문 실행
+  - default문은 생략 가능
+
+### While 문
+- `While`문의 구성과 코드 사례 : 조건식이 '참'인 동안 반복 실행
+
+``` java
+public class Main {
+    public static void main(String[] args) {
+        switch(식){
+          case'A':
+          --- 실행 문장 1 ---
+        }
+    }
+}
+```
+
+### case 문의 값
+- 문자, 정수, 문자열 리터럴만 허용
+- 실수 리터럴은 허용되지 않음
+
+### do-while 문
+- `do-while` 문의 구성과 코드 사례
+  - 조건식이 '참'인 동안 반복 실행. 작업문은 한 번 반드시 실행.
+
+### 다중 if-else 문
+
+- 다중 if문
+
+- 조건문이 너무 많은 경우, `switch` 문 사용 권장
+
+``` java
+public class Main {
+    public static void main(String[] args) {
+        if(조건식 1){
+          --- 실행문장 1 ---
+        }
+        else if(조건식 2){
+          --- 실행문장 2 ---
+        }
+        else if(조건식 m){
+          --- 실행문장 m ---
+        }
+    }
+}
+```
+
 ### 조건문 - 단순 if문, if-else문
 - 단순 if 문
   - if의 괄호 안에 조건식(논리형 변수나 논리 연산)
