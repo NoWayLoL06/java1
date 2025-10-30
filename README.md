@@ -1,4 +1,209 @@
 # 권용준(202530102)
+
+# ( 10월 30일 강의)
+
+### 객체 지향 상속의 필요성
+- 상속이 없는 경우 중복된 멤버를 가짐
+
+- 상속이 있는 경우 중복이 제거되고 간결해짐
+
+### 클래스 상속과 객체
+- 선언 : extends 키워드
+
+- 부모 클래스를 물려받아 자식 클래스를 확장의 의미
+
+- 부모 클래스 --> 슈퍼 클래스
+
+- 자식 클래스 --> 서브 클래슷
+``` java
+class Point {
+  int x, y;
+}
+class ColorPoint extends Point{ // Point를 상속 받음
+}
+```
+
+### 서브 클래스 객체의 모양
+- 슈퍼 클래스 객체와 서브 클래스의 객체는 별개
+
+- 서브 클래스 객체는 슈퍼 클래스 멤버에 포함
+
+### 상속 특징
+- 클래스 다중 상속 불허
+  - 하나의 클래스 둘 이상의 부모 클래스를 동시에 받는 것
+
+- C++은 다중 상속 가능
+- C++은 다중 상속으로 멤버가 중복 생성되는 문제 있음.
+  - 부모 클래스 간에 계층적 관계가 있으면, 중복된 멤버가 생설 될 수 있음
+  - 모호성의 문제: 두 부모 클래스에 동일한 이름의 멤버가 존재하면 어떤 부모의 멤버를 호출할지 모호해짐
+
+- 자바는 인터페이스의 다중 상속 가능
+
+- 모든 자바 클래스는 묵기적으로 object클래스 상속
+  - java.lang.object는 모든 클래스의 슈퍼 클래스
+
+### 슈퍼 클래스의 멥버에 대한 서브 클래스의 접근
+- 슈퍼 클래스의 private 멤버: 서브 클래스 접근 불가
+
+- 슈퍼 클래스의 디폴트 멤버: 서브 클래스가 동일 패키지가 있을 때, 가능
+
+- 슈퍼 클래스의 public 멤버: 항상 가능
+
+- 슈퍼 클래싕 protected 멤버: 같은 패키지 내의 모든 클래스 접근 가능
+
+### 서브/슈퍼 클래스의 생성자 호출과 실행
+- 서브 클래스의 객체가 생성될 때: 서브/슈퍼 클래스 생성자 모두 실행
+
+- 호출 순서: 서브 --> 슈퍼 클래스 생성자 호출
+
+- 실행 순서: 슈퍼 --> 서브 클래스 생성자 실행
+
+### 서브 클래스와 슈퍼 클래스의 생성자 선택
+- 슈퍼/서브 클래스: 여러 개의 생성자 작성 가능
+
+- 서브 클래스의 객체가 생성될 때: 슈퍼 클래스 1개 서브 클래스 1개의 생성자가 실행
+
+- 서브 클래스의 생성자와 슈퍼 클래스의 생성자가 결정되는 방식
+
+1. 개발자의 명시적 선택
+  - 서브 클래스 개발자가 슈퍼 클래스의 생성자 명시적 선택
+  - super() 키워드 사용
+
+2. 컴파일러가 기본 생성자 선택
+  - 서브 클래스 개발자가 슈퍼 클래스의 생성자를 선택하지 않는 경우
+  - 컴파일러가 자동으로 슈퍼 클래스의 기본 생성자 선택
+
+### 컴파일러에 의해 슈퍼 클래스의 기본 생성자가 묵시적 선택(1)
+``` java
+class A {
+  public A() {
+    System.out.println("생성자A");
+  }
+  public A(int x) {
+    ....
+  }
+}
+```
+``` java
+class B extends A {
+  public B() {
+    System.out.println("생성자B");
+  }
+}
+```
+``` java
+public class ConstructorEx2 {
+  public static void main(Sting[] args) {
+    B b;
+    b = new B(); // 생성자 호출
+  }
+}
+```
+
+### 서브 클래스의 매개 변수를 가진 생성자에 대해서도 슈퍼 클래스의 기본 생성자가 자동 선택
+``` java
+class A {
+  public A() {
+    System.out.println("생성자A");
+  }
+  public A(int x) {
+    System.out.println("매개변수생성자A");
+  }
+}
+```
+``` java
+class B extends A {
+  public B() {
+    System.out.println("생성자B");
+  }
+}
+```
+``` java
+public class ConstructorEx2 {
+  public static void main(Sting[] args) {
+    B b;
+    b = new B(5); // 생성자 호출
+  }
+}
+```
+
+### super()로 슈퍼 클래스의 생성자 명시적 선택
+- super(): 서브 클래스에서 명시적으로 슈퍼 클래스 생성자 선택 호출
+
+- 사용 방식
+  - super(parameter);
+  - 인자를 이용하여 슈퍼 클래스의 적당한 생성자 호출
+  - 반드시 서브 클래스 생성자 코드의 제일 첫 라인에 와야 함.
+
+### 업캐스팅(upcasting) 개념
+- 하위 클래스의 레퍼런스는 상위 클래스를 가리킬 수 없다 
+- 상위 클래스의 레퍼런스는 하위 클래스를 가리킬 수 있다
+
+### 업캐스팅
+- 생물이 들어가는 박스에 사람이나 코끼리를 넣어도 무방.
+- 사람이나 코끼리 모두 생물이라는 상속 받았기 때문
+
+- 업캐스팅 이란?
+  - 서브 클래스의 레퍼런스를 슈퍼 클래스 레퍼런스에 대입
+  - 슈퍼 클래스 레퍼런스로 서브 클래스 객체를 가리키게 되는 현상
+
+  ```java
+  class Person {}
+  class Student extends Person {}
+
+  person p;
+  Student s = new Student();
+  p = s; // 업캐스팅
+  ```
+
+### 업캐스팅 사례
+```java
+class Person{
+  String name;
+  String id;
+
+  public Person(String name) {
+    this.name = name;
+  }
+}
+class Student extends Person {
+  String grade;
+  String department;
+
+  public Student(String name) {
+    super(name);
+  }
+}
+public class UpcastingEx {
+  public static void main(String[] args) {
+    Person p;
+    Student s = new Student("이재문");
+    p = s;
+
+    System.out.println(p.name); // 오류 없음
+
+    p.grade = "A"; // 컴파일 오류
+    p.department = "Com"; // 컴파일 오류
+  }
+}
+```
+
+### static 메소드의 제약 조건 1
+- static 메소드는 오직 static 멤버만 접근 가능
+  - 객체가 생성되지 않은 상황에서도 static 메소드는 실행될 수 있기 때문
+  - non-static멤버도 사용가능
+
+### static 메소드의 제약 조건 2
+- this(레퍼런스) 시용 불가
+
+- 객체 없이도 사용 가능 
+
+### final 클래스와 메소드
+- final 클래스 - 더 이상 값 변환 불 가능
+
+### final 필드
+- 상수를 선언할 때 사용
+
 # ( 10월 23일 강의)
 
 ### 클래스와 객체
