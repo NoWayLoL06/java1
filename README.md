@@ -1,5 +1,229 @@
 # 권용준(202530102)
 
+# ( 10월 31일 강의)
+
+### 다운 캐스팅(dowdcasting)
+- 슈퍼클래스 레퍼런스를 서브 클래스 레퍼런스에 업캐스팅 된 것을 다시 원래대로 되돌리는 것
+
+- 반드시 명시적 타입 변환 지정
+```java
+class Person{}
+class Student extends Person{}
+
+Person p = new Student("이재문"); // 업캐스팅
+
+Student s = (Student)p; // 다운 캐스팅
+```
+
+### 업캐스팅 레퍼런스로 객체 구별?
+- 업캐스팅된 레퍼런스로는 객체의 실제 타입을 구분하기 어려움
+
+- 슈퍼 클래스는 여러 서브 클래스에 상속되기 때문
+
+- 예를 들어 아래의 클래스 계층 구조에서, p가 가리키는 객체가 Person 객체인지, Student 객체인지, Professor 객체인지 구분 어려움
+
+```java
+Person p = new Person();
+Person p = new Student(); // 업캐스팅
+Person p = new Professor(); // 업캐스팅
+```
+
+### instanceof 연산자 사용
+- 레퍼런스가 가리키는 객체의 타입 식별: 연산의 결과는 true/false의 불린 값으로 반환
+
+- instanceof 연산자 사용 사례
+```java
+Person p = new Professor();
+if(p instanceof Person) // true
+if(p instanceof Student)  // false, student를 상속 X
+if(p instanceof Researcher) // true
+if(p instanceof Professor)  // ture
+```
+
+### 메소드 오버라이딩(Method Overriding)의 개념
+- 서브 클래스에서 슈퍼 클래스의 메소드 중복 작성
+
+- 슈퍼 클래스의 메소드 무력화, 항상 서브 클래스에 오버라이딩한 메소드가 실행되도록 보장
+
+- "메소드 무시하기"로 번역되기도 함
+
+- 오버라이딩 조건
+ - -> 슈퍼 클래스 메소드의 원형(메소드 이름, 인자 타입 및 개수, 리턴 타입) 동일하게 작성
+
+ ### 서브 클래스 객체와 오버라이딩된 메소드 호출
+ - 오버라이딩 한 메소드가 실행됨을 보장
+ ```java
+ class A {
+  void f() {
+    System.out.println("A의 f()호출");
+  }
+ }
+ class B extends A {
+  void f() {  // 클래스의 A의 f()를 오버라이딩
+    System.out.println("A의 f()호출");
+  }
+ }
+ ```
+
+### 오버라이딩의 목적, 다향성 실현
+- 오버라이딩으로 다형성 실현
+
+- 하나의 인터페이스(같은 이름)에 서로 다른 구현
+
+- 슈퍼 클래스의 메소드를 서브 클래스에서 각각 목적에 맞게 다르게 구현
+
+- 사례: Shape의 draw() 메소드를 Line, Rect, Circle에서 오버라이딩하여 다르게 구현
+
+### 동적 바인딩 - 오버라이딩된 메소드 호출
+- SuperObject 하나만 있는 응용프로그램의 경우 혹은 상속받은 경우 모두 동적 바인딩을 한다.
+
+- 오버라이딩 메소도가 항상 호출된다
+  - SuperObject는 키워드가 아님
+
+```java
+public class SuperObject {
+  protected String name;
+  public void paint() {
+    draw();
+  }
+  public void draw() {
+    System.out.println("Super Object");
+  }
+  public static void main(String[] args) {
+    SuperObject a = new SuperObject();
+    a.paint();
+  }
+}
+```
+### super 키워드로 슈퍼 클래스의 멤버 접근
+- 슈퍼 클래스의 멤버를 접근할 때 사용되는 레퍼런스
+  - super.슈퍼클래스의 멤버
+
+- 서브 클래스에서만 사용
+
+- 슈퍼 클래스의 필드 접근
+
+- 수퍼 클래스의 메소드 호출 시 super로 이루어지는 메소드 호출: 정적 바인딩
+
+### 추상 클래스
+- 추상 메소드 (abstract method)
+  - abstract로 선언된 메소드, 메소드의 코드는 없고 원형만 선언
+```java
+// 추상 메소드를 가진 추상 클래스
+abstract public String getName(); // 추상 메소드
+```
+
+- 추상 클래스
+  - 추상 메소드를 가지며 abstract로 선언된 클래스
+  - 추상 메소드 없이, abstract로 선언된 클래스
+
+```java
+// 추상 메소드를 가진 추상 클래스
+abstract class Shape {
+  public Shape() {...}
+  public edit() {...}
+
+  abstract public void draw(); // 추상 클래스
+}
+```
+```java
+// 추상 메소드 없는 추상 클래스
+abstract class JComponent {
+  String name;
+  public void load(String name ) {
+    this.name = name;
+  }
+}
+```
+
+### 추상 클래스의 인스턴스 생성 불가
+- 추상 클래스는 온전한 클래스가 아니기 떄문에 인스턴스를 생성할 수 없음
+
+### 추상 클래스의 상속과 구현
+- 추상 클래스 상속
+  - 추상 클래스를 상속 받으면 추상 클래스됨
+  - 서브 클래스도 abstract로 선언 해야 함
+```java
+abstract class A { // 추상 클래스
+  abstract public int add(int x, int y); // 추상 메소드
+}
+abstract class B extends A { // 추상 클래스
+  public void show() { System.out.println("B"); }
+}
+```
+- 추상 클래스 구현
+  - 서브 클래스에서 슈퍼 클래스의 추상 메소드 구현 (오버라이딩)
+  - 추상 클래스를 구현한 서브 클래스는 추상 클래스 아님(?)
+```java
+class C extends A { // 추싱 클래스 구현, C는 정상 클래스
+  public int add(int x, int y) { return x+y;} // 추상 메소드 구현, 오버라이딩
+  public void show() { System.out.println("c");}
+  ...
+  C c = newC{}; // 정상
+}
+```
+
+### 추상 클래스 목적
+- 상속을 위한 슈퍼 클래스로 활용하는 것
+- 서브 클래스에서 추상 메소드구현
+- 다향성 실현
+
+### 자바의 인터페이스
+- 소프트웨어를 규격화된 모듈로 만들고, 인터페이스가 있는 모듈을 조립하듯이 응용프로그램을 작성 하기위해서 사용.
+
+- 자바의 인터페이스
+  - 클래스가 구현해야 할 메소드들이 선언되는 추상형
+  - 인터페이스 선언: interface 키워드로 선언. Ex) public interface SerialDriver???
+
+```java
+interface PhoneInterface {
+  public static final int TIMEOUT = 10000;
+  public abstract void sendCall();
+  public abstract void receiveCall();
+  public default void printLogo() {
+    System.out.println("** Phone **")
+  }
+}
+```
+
+### 인터페이스 구성 요소들의 특징
+- 상수: public만 허용, public static final 생략
+
+- 추상 메소드: public static 생략
+
+- default 메소드:
+  - 인터페이스에 코드가 작성한 메소드
+  - 인터페이스를 구현하는 클래스에 자동 상속
+  - public 접근 지정만 허용, 생략 가능
+
+- private 메소드:
+  - 인터페이스 내에 메소드 코드가 작성되어야 함
+  - 인터페이스 내에 있는 다른 메소드에 의해서만 호출 가능
+
+- static 메소드: public, private 둘 다 허용
+
+### 자바 인터페이스 특징
+- 인터페이스의 객체 생성 불가
+```java
+new PhoneInterface(); // 오류 인터페이스 PhoneInterface 객체 생성 불가
+```
+
+- 인터페이스 타입의 레퍼런스 변수 선언 가능
+```java
+PhoneInterface galaxy; // galaxy는 언터페이스에 대한 레퍼런스 변수
+```
+
+### 인터페이스 상속
+- 인터페이스 간의 상속 가능:
+  - 인터페이스를 상속하여 확장된 인터페이스 작성 가능
+  - extends 키워드 상속
+  - 다중 상속 허용
+
+### 인터페이스 구현
+- 인터페이스의 추상 메소드를 모두 구현한 클래스 작성
+  - implements 키워드 사용
+  - 여러 개의 인터페이스 동시 구현 가능
+
 # ( 10월 30일 강의)
 
 ### 객체 지향 상속의 필요성
