@@ -1,5 +1,220 @@
 # 권용준(202530102)
 
+# (11월 13일 강의)
+
+### toString() 메소드, 객체를 문자열로 변환
+- 각 클래스는 toString()을 오버라이딩하여 자신만의 문자열 리턴 가능
+  - 객체를 문자열로 변환
+  - 원형 : public String toString();
+
+### 객체 비교(==)와 equals() 메소드
+- == 연산자: 객체 레퍼런스 비교
+
+- boolean equals(Object obj)
+  - 두 객체의 내용물 비교
+```java
+Point a = new Point(2,3);
+Point b = new Point(2,3);
+Point c = a;
+
+if(a == b) // false
+  System.out.println("a==b");
+if(a == c) // true
+  System.out.println("a==c");
+
+```
+
+  - 객체의 내용물을 비교핳기 위해 클래스의 멤버로 작성
+
+### Wrapper 클래스
+- wrapper 클래스: 자바의 기본 타입을 클래스화 한 8개 클래스의 통칭
+  - 용도: 객체만 사용할 수 있는 컬렉션 등에 기본 타입의 값을 사용하기 위해 Wrapper 객체로 만들어 사용한다.
+
+### Wrapper 객체 생성
+- 기본 타입의 갑승로 Wrapper 객체 생성
+```java
+integer i = integer.valueOf(10);
+Chracter c = Chracter.valueOf('c');
+Double f = Double.valueOf(3.14);
+```
+
+- 문자열로 Wrapper 객체 생성
+```java
+int i = integer.parseint("123"); // i = 123
+```
+
+- Float 객체는 double 타입의 값으로 생성 가능
+```java
+String s1 = integertoString(123); // 정수 123을 문자열 "123"으로 변환
+```
+
+### 박싱과 언박싱
+- 박싱(boxing): 기본 타입의 값을 Wrapper 객체로 변환하는 것.
+
+- 언박싱(unboxing): Wrapper 객체에 들어 있는 기본 타입의 값을 뺴내는 것. 박싱의 반대
+```java
+Integer ten = Integer.valueOf(10); // 박싱
+int n = ten.inValue(); // 언박싱
+```
+- 자동 박싱과 자동 언박싱: JDK 1.5부터 박싱과 언박싱은 자동으로 이루어짐 
+
+### String의 생성과 특징
+- String 클래스는 문자열을 나타냄
+
+- 스트링 리터럴(문자열 리터럴)은 String 객체로 처리됨
+
+- 스트링 객체의 생성 사례
+```java
+String str1 = "abcd"
+
+char data[] = {'a','b','c','d'}
+String str2 = new String(data);
+String str3 = new String("abcd"); // str2와 str3는 모두 "abcd" 문자열
+```
+
+### 스트링 리터럴과 new String()
+- 스트링 리터럴
+  - 자바 가상 기계 내부에서 리터럴 테이블에 저장되고 관리됨
+  - 응용프로그램에서 공유됨
+  - 스트링 리터럴 사례) String s = "hello";
+
+- new String() 으로 생성된 스트링
+  - 스트링 객체는 힙에 생성
+  - 스트링은 공유되지 않음
+
+### 스트링 객체의 주요 특징
+- 스트링 객체는 수정 불가능
+  - 리터럴 스트링이든 new String()을 생성했든 객체의 문자열은 수정 불가능
+
+
+- 스트링 비교: 두 스트링을 비교할 때 반드시 equals()를 사용하여야 함 --> equals()는 내용을 비교하기 때문
+
+### String 활용
+- 스트링 비교, equals()와 compareTo()
+  - --> 스트링 비교에 == 연산자 절대 금지
+  - equals(): 스트링이 같으면 true, 아니면 false 리턴
+```java
+String java = "java"
+if(java.equals("java")) // true
+```
+
+- int compareTo(String anotherString)
+  - 문자열이 같으면 0 리턴
+  - 이 문자열이 anotherString 보다 먼저 나오면 음수 리턴
+  - 이 문자열이 anotherString 보다 나중에 나오면 양수 리턴
+```java
+String java = "Java"
+String cpp = "C++"
+int res = java.compareTo(cpp);
+if(res == 0) System.out.println("the same");
+else if(res < 0) System.out.println(java + " < " + cpp);
+else System.out.println(java + " > " + cpp);
+```
+
+### 자바의 GUI(Graphical User Interface)
+- GUI: 사용자가 편리하게 입출력을 할 수 있도록 그래픽으로 화면을 구성하고 마우스나 키보드로 입력 받을 수 있도록 지원하는 인터페이스
+
+- 자바 언어에서 GUI 응용프로그램 작성: AWT와 Swing 패키지에 강력한 GUI 컴포넌트 제공.
+
+- AWT 패키지
+  - 자바가 처음 나왔을 때 배포된 GUI 패키지, 최근에는 사용하지 않음
+  - AWT 컴포넌트는 중량 컴포넌트
+  - AWT 컴포넌트의 그리기는 운영체제에 의해 이루어지며, 운영체제에 자원을 많이 소모하고 부담을 줌
+  - 운영체제가 직접 그리기에 속도는 빠르다.
+
+- Swing 패키지
+  - AWT 기술을 기반으로 작성된 자바 라이브러리
+  - 모든 AWT 기능 추가된 풀부하고 화려한 고급 컴포넌트
+  - AWT 컴포넌트를 모두 스윙으로 재 작성
+  - AWT 컴포넌트의 이름 앞에 J자를 덧붙임
+  - 순수 자바 언어로 구현
+  - 스윙 컴포넌트는 경량 컴포넌트
+  - 스윙 컴포넌트는 운영체제의 도움을 받지 않고, 직접 그리기 때문에 운영체제에 부담을 주지 않음
+  - 현재 자바의 GUI 표준으로 사용됨
+
+### 컨테이너와 컴포넌트
+- 컨테이너
+  - 다른 컴포넌트를 포함할 수 있는 GUI 컴포넌트: java.awt.Container를 상속받음
+  - AWT 컨테이너: Panel, Frame, Applet, Dialog, Window
+  - Swing 컨테이너: JPanel JFrame, JApplet, JDialog, JWindow
+
+- 컴포넌트
+  - 컨테이너에 포함되어야 화면에 출력될 수 있는 GUI 객체
+  - 다른 컴포넌트를 포함할 수 없는 순수 컴포넌트
+  - 모든 GUI 컴포넌트가 상속받는 클래스: java.awt.Component
+  - 스윙 컴포넌트가 상속받는 클래스: java.swing.Jcomponent
+
+- 최상위 컨테이너
+  - 다른 컨테이너에 포함되지 않고도 화면에 출력되며, 독립적으로 존재 가능한 컨테이너
+  - 스스로 화면에 자신을 출력하는 컨테이너: JFrame, JDialog,g JApplet
+
+### Swing GUI 프로그램 만들기
+- 스윙 GUI 프로그램을 만드는 과정
+1. 스윙 프레임 만들기
+2. main() 메소드 작성
+3. 스윙 프레임에 스윙 컴포넌트 붙이기
+
+### Swing 프레임
+- 스윙 프레임: 모든 스윙 컴포넌트를 담는 최상위 컨테이너
+  - JFrame을 상속받아 구현
+  - 컴포넌트들은 화면에 보이려연 스윙 프레임에 부착되어야 함
+  - 프레임을 닫으면 프레임에 부착된 모든 컴포넌트가 보이지 않게 됨
+
+- 스윙 프레임 기본 구성
+  - 프레임: 스윙 프로그램의 기본 틀
+  - 메뉴바: 메뉴들이 부착되는 공간
+  - 컨텐트팬: GUI 컴포넌트들이 부착되는 공간
+
+### 프레임 만들기, JFrame 클래스 상속
+- 스윙 프레임
+  - JFrame 클래스를 상속받은 클래스 작성
+  - 프레임의 크기 반드시 지정: setSize() 호출
+  - 프레임을 화면에 출력하는 코드 반드시 필요: setVisible(true) 호출
+```java
+import javax.swing.*;
+
+public class MyFrame extends JFrame {
+  public MyFrame() {
+    setTitle("300x300 스윙 프레임 만들기");
+    setSize(300,300);
+    setVisible(true);
+  }
+
+  public static void main(String[] args) {
+    javax.swing.SwingUtilities.invokeLater(new Runnable() {
+      public void run() {
+        new MyFrame();
+      }
+    });
+  }
+}
+```
+### Swing 응용프로그램에서 main()의 기능과 위치
+- 스윙 응용프로그램에서 main()의 기능 최소화 바람직
+  - 스윙 응용프로그램이 실행되는 시작점으로서의 기능만
+  - 스윙 프레임을 생성하는 정도의 코드로 최소화
+```java
+public static void main(String[] arg) {
+  MyFrame frame = new MyFrame(); // 스윙 프레임 생성
+}
+```
+
+### 프레임에 컴포넌트 붑ㄴ이기
+- 타이틑 닳기
+  - super() 나 setTitle() 이용
+
+### Tip. 컨텐트팬에 대한 JDK 1.5 이후의 추가 사항
+- JDK 1.5 이전
+  - 프레임의 컨텐트팬을 알아내서, 반드시 컨텐트팬에 컴포넌트 부착
+
+- JDK 1.5 이후
+  - 프레임에 컴포넌트를 부착하면 프레임이 대신 컨텐트팬에 부착
+
+- 결론
+  - JDK 1.5 이전처럼 직접 컨텐트팬에 컴포넌트를 부착하는 것이 바람직함
+  - 컨텐트팬 다루기 능력 필요하기 때문
+  - 컨포넌트의 부모가 프레임이 아닌, 컨텐트팬임을 알고 명확히 사용할 필요
+
 # (11월 6일 강의)
 
 ### 패키지 개념과 필요성
