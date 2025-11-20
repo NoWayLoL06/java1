@@ -1,5 +1,162 @@
 # 권용준(202530102)
 
+# (11월 20일 강의)
+
+### Swing 응용프로그램의 종료
+- 응용 프로그램 내에서 스스로 종료하는 방법
+  - 언제 어디서나 무조건 종료 System.exit(0);
+
+- 프레임의 오른쪽 상단의 종료버튼(X)이 클릭되면 어떤 일이 일어나는가?
+  - 프레임 종료, 프레임 윈도우를 닫음: 포레임이 화면에서 보이지 않게 됨
+
+- 프레임이 보이지 않게 되지만 응용프로그램이 종료된 것이 아님.
+  - 키보드나 마우스 입력 받지 못함
+  - 다시 setVisible(true)를 호출하면, 보이게 되고 이전 처럼 작동함
+
+- 프레임 종료버튼이 클릭될 때, 프레임과 함께 프로그램을 종료시키는 방법
+```java
+frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+```
+
+### 컨테이너와 배치, 배치관리자 개념
+- 컨테이너의 배치관리자
+  - 컨테이너마다 하나의 배치관리자 존재
+  - 컨테이너에 부착되는 컴포넌트의 위치와 크기 결정
+  - 컨테이너의 크기가 변경되면, 컴포넌트의 위치와 크기 재결정
+
+### 배치 관리자 대표 유형 4가지
+- FlowLayout 배치 관리자
+  - 컴포넌트가 삽입되는 순서대로 왼쪽에서 오른쪽으로 배치
+  - 배치할 공간이 없으면 아래로 내려와서 반복
+
+- BorderLayout 배치 관리자
+  - 컨테이너 공간을 동 서 남 북 중앙의 5가지 영역으로 나눔
+
+- GridLayout 배치 관리자
+  - 컨테이너를 프로그램에서 설정한 동일한 크기의 2차원 격자로 나눔
+  - 컴포넌트는 삽입 순서대로 좌에서 우로, 다시 위에서 아래로 배치
+
+- CardLayout
+
+### 컨테이너와 디폴트 배치 관리자
+  - 컨테이너의 디폴트 배치 관리자: 컨테이너 생성시 자동으로 생성되는 배치관리자
+    - Windoww, JWindow    --> BorderLayout
+    - Fream,   JFrame     --> BorderLayout
+    - Dialog,  Jdialog    --> BorderLayout
+    - Panel,   JPanel     --> FlowLayout
+
+### 컨테이너에 새로운 배치관리자 설정
+- 컨테이너에 새로운 배치관리자 설정
+  - setLayout(LayoutManager lm) 메소드 호추리 lm을 새로운 배치관리자로 설정
+
+- JPanel 컨테이너에 BorderLayout 배치관리자를 설정하는 예
+  ```java
+  JPanel p = new JPanel();
+  p.setLayout(new BorderLayout()); // JPanel에 BorderLayout 설정
+  ```
+
+### FlowLayout 배치 관리자
+- 배치 방법:
+  - 컴포넌트를 컨테이너 내에 왼쪽에서 오른쪽으로 배칯
+  - 다시 위에서 아래로 순서대로 배치
+
+### FlowLayout의 생성자
+- 생성자:
+  - FlowLayout()
+  - FlowLayout(int align, int hGap, int vGap)
+
+- align: 컴포넌트를 정렬하는 방법 지정. 왼쪽 정렬(FlowLayout.LEFT), 오른쪽 정렬(FlowLayout.RIGHT), 중앙 정렬(FlowLayout.SENTER)
+
+### BorderLayout 배치 관리자
+- 배치 방법:
+  - 컨테이너 공간을 5 구역으롭 분할, 배치: 동, 서, 남, 북, 중앙
+
+- 배치 방법:
+  - add(Component comp, int index): comp를 index의 공간에 배치
+
+### BorderLayout 생성자와 add() 메소드
+- 생성자
+  - BorderLayout()
+  - BorderLayout(int hGap, int vGap)
+    - hGap: 좌우 두 컴포넌트 사이의 수평 간격, 픽셀 단위(디폴트: 0)
+    - VGap: 상하 두 컴포넌트 사이의 수평 간격, 픽셀 단위(디폴트: 0)
+
+### GridLayout 배치 관리자
+- 배치 방법
+  - 컨테이너 공간을 동일 사각형 격자(그리드)로 분할하고 각 셀에 컴포넌트 하나씩 배치
+  - 생성자에 행수와 열수 지정
+  - 셀에 왼쪽에서 오른쪽으로, 다시 위에서 아래로 순서대로 배치
+```java
+
+```
+### GirdLayout 생성자
+- 생성자
+  - GridLayout()
+  - GridLayout(int rows, int cols)
+  - GridLayout(int rows, int cols, int hGap, int vGap)
+    - rows: 격자의 행수 디폴트 1
+    - cols: 격자의 행수 디폴트 1
+    - hGap: 좌우 두 컴포넌트 사이의 수평 간격, 픽셀 단위(디폴트: 0)
+    - VGap: 상하 두 컴포넌트 사이의 수평 간격, 픽셀 단위(디폴트: 0)
+
+### 배치 관리자가 없는 컨테이너
+- 배치관리자가 없는 컨테이너가 필요한 경우
+  - 응용프로그램에서 직접 컴포넌트의 크기와 위치를 결정하고자 하는 경우
+  1. 컴포넌트의 크기나 위치를 개발자 임의로 결정하고자 하는 경우
+  2. 게임 프로그램과 같이 시간이나 마우스/키보드의 입력에 따라 컴포넌트들의 위치와 크기가 수시로 변하는 경우
+  3. 여러 컴포넌트들이 서로 겹쳐 출력하고자 하는 경우
+
+### 컴포넌트의 절대 위치와 크기 설정
+- 배치 관리자가 없는 컨테이너에 컴포넌트를 삽입할 떄
+  - 프로그램에서 컴포넌트의 절대 크기와 위치 설정
+  - 컴포넌트들이 서로 겹치게 할 수 있음
+
+- 컴포넌트의 크기와 위치 설정 메소드
+  - void setSize(int width, int height) // 컴포넌트 크기 설정
+  - void setLocation(int x, int y) // 컴포넌트 위치 설정
+  - void setBounds(int x, int y, int width, int height) // 위치와 크기 동시 설정
+
+- 예 버튼을 100x40 크기로 하고, JPanel의 (50,50) 위치에 배치
+```java
+JPanel p = new JPanel();
+p.setLayout(null)
+
+JButton clickBtton = new Jbutton("Click");
+clickButton.setSize(100, 40);
+clickButton.setLocation(50,50);
+p.add(clickButton);
+```
+### 이벤트 기반 프로그래밍
+- 이벤트 기반 프로그래밍(Event Driven Programming)
+  - 이벤트의 발생에 의해 프로그램 흐름이 결정되는 방식
+    - 이벤트가 발생하면 이벤트를 처리하는 루틴(이벤트 리스너) 실행
+    - 실행될 코드는 이벤트의 발생에 의해 전적으로 결정
+
+  - 반대되는 개념: 배치 실행(batch programming)
+    - 프로그램의 개발자가 프로그램의 흐름을 결정하는 방식
+  
+  - 이벤트 종류
+    - 사용자의 입력: 마우스 드래그, 마우스 클릭, 키보드 누름
+    - 센서로부터의 입력, 네트워크로부터 데이토 송수신
+    - 다른 응용프로그램이나 다른 스레드로부터의 메시지
+  
+  - 이벤트 기반 응용 프로그램의 구조
+    - 이벤트마다 처리하는 리스너 코드 보유
+  
+  - GUI 응용프로그램은 이벤트 기반 프로그래밍으로 작성됨
+    - GUI 라이브러리 종류: C++의 MFC, C# HUI, Visual Basic, X Window, Android
+    - 자바의 AWT와 Swing
+
+### 이벤트 객체
+- 이벤트 객체
+  - 발생한 이벤트에 관한 정보를 가진 객체
+  - 이벤트 리스너에 전달됨
+    - 이벤트 리스너 코드가 발생한 이벤트에 대한 상황을 파악할 수 있게 함
+
+- 이벤트 객체가 포함하는 정보
+
+
+
 # (11월 13일 강의)
 
 ### toString() 메소드, 객체를 문자열로 변환
@@ -199,7 +356,7 @@ public static void main(String[] arg) {
 }
 ```
 
-### 프레임에 컴포넌트 붑ㄴ이기
+### 프레임에 컴포넌트 붑이기
 - 타이틑 닳기
   - super() 나 setTitle() 이용
 
