@@ -1,5 +1,119 @@
 # 권용준(202530102)
 
+# (11월 27일 강의)
+
+### 익명 클래스로 이벤트 리스너 작성
+- 익명 클래스 (annoymous class): 이름 없는 클래스
+  - 클래스 선언 + 인스턴스 생성을 한번에 달성
+
+  - 간단한 리스너의 경우 익명 클래스 사용 추천
+  - 메소드의 개수가 1, 2개인 리스너(AcrionListener, ItemListener)에 대해 주로 사용
+
+### 어댑터 클래스
+- 이벤트 리스너 구현에 따른 부담
+  - 리스너의 추상 메소드를 모두 구현해야 하는 부담
+  - 예) 마우스 리스너에서 마우스가 눌러지는 경우(mousePressed())만 처리하고자 하는 경우에도 나머지 4 개의 메소드를 모두 구현해야하는 부담
+
+- 어댑터 클래스(Adapter)
+  - 리스너의 모든 메소드를 단순 리턴하도록 만든 클래스(JDK에서 제공)
+  - MouseAdapter 예
+```java
+class MouseAdapter implements MouseListener, MouseMotionListener, MouseWheelListener {
+  public ...
+}
+```
+
+### Key 이벤트와 포커스
+- 키 입력시. 다음 세 경우 각각 Key 이벤트 발생
+  - 키를 누르는 순간
+  - 누른 키를 떼는 순간
+  - 누른 키를 떼순간(Unicode의 경우에만)
+
+- 키 이벤트를 받을 수 있는 조건
+  - 모든 컴포넌트
+  - 현재 포커스를 가진 컴포넌트가 키 이벤트 독점
+
+- 포커스(focus)
+  - 컴포넌트나 응용프로그램이 키 이벤트를 독점하는 권한
+  - 컴포넌트에 포커스 설정 방법: 다음 2 라인 코드 필요
+```java
+component.setFocusable(true); 
+component.requestFocus(); // component에 포커스 강제 지정
+```
+
+### KeyListener
+- 응용프로그램에서 KeyListener를 상속받아 키 리스너 구현
+- KeyListener의 3개 메소드
+```java
+void keyPressed(KeyEvent e){
+
+}
+void keyReleased(KeyEvent e){
+
+}
+void key?(KeyEvent e){
+
+}
+```
+
+- 컴포넌트에 키 이벤트 리스너 달기
+
+### 유니코드 키
+- 유니코드 키의 특징
+  - 국제 산업 표준
+  - 전 세계의 문자를 컴퓨터에서 일관되게 표현하기 위한 코드 체계
+  - 문자들에 대해서만 키 코드 값 정의: A~Z a~z 0~9 ! @ # 등
+
+- 문자가 아닌 키 경우에는 표준화된 키 코드 값 없음
+  - Fuction 키 Home 키 Up 키 등은 플랫폼에 따라 키 코드 값을 다를 수 있음
+
+- 유니코드 키가 입력되는 경우
+
+- 유니코드 키가 아닌 경우
+
+### 가상 키와 입력된 키 판별
+- keyEvent 객체
+  - 입력된 키 정보를 가진 이벤트 객체
+  KeyEvent 객체의 메소드로 입력된 키 판별
+
+- KeyEvent 객체의 메소드로 입력된 키 판별
+  - char KeyEvent.getKeychar()
+  - 키의 유니코드 문자 값 리턴
+  - Unicode 문자 키인 경우에만 의미 있음
+  - 입력된 키를 판별하기 위해 문자 값과 비교하면 됨
+
+- int KeyEvent.getKeyCode()
+  - 유니코드 키 포함
+  - 모든 키에 대한 정수형 키 코드 리턴
+  - 입력된 키를 판별하기 위해 가상키 값과 비료하여야 함
+  - 가상 키 값은 KeyEvent 클래스 상수로 선언
+
+### 가상 키(virtual key)
+- 가상 키는 KeyEvent 클래스에 상수로 선언
+
+### Mouse 이벤트와 MouseListener, MouseMotionListener
+- Mouse 이벤트: 사용자의 마우스 조직에 따라 발생하는 이벤트
+
+- mouseCLicked(): 마우스가 눌러진 위치에서 그대로 뗴어질 때 호출
+- mouseReleased(): 마우스가 눌러진 위치에서 그대로 떼어지든 아니든 항상 호출
+- mouseDragged(): 마우스가 드래그되는 동안 계속 여러번 호출
+
+- 마우스가 눌러진 위치에서 뗴어지는 경우 메소드 호출 순서
+
+- 마우스가 드래그될 떄 호출되는 메소드 호출 순서
+
+### 마우스 리스너 달기와 MouseEvent 객체 활용
+- 마우스 리스너 달기
+  - 마우스 리스너는 컴포넌트에 다음과 같이 등록
+
+  - 컴포넌트가 마우스 무브나 마우스 드래깅을 함께 처리하고자 하면, MouseMotion 리스너 따로 등록
+
+- MouseEvent 객체 활용
+  - 마우스 포인터의 위치, 컴포넌트 내 상대 위치: int getX(), int getY()
+
+- 마우스 클릭 횟수: int getClickCount()
+
+
 # (11월 20일 강의)
 
 ### Swing 응용프로그램의 종료
@@ -154,8 +268,6 @@ p.add(clickButton);
     - 이벤트 리스너 코드가 발생한 이벤트에 대한 상황을 파악할 수 있게 함
 
 - 이벤트 객체가 포함하는 정보
-
-
 
 # (11월 13일 강의)
 
